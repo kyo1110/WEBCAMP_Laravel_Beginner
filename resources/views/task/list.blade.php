@@ -4,7 +4,7 @@
 @section('title')(詳細画面)@endsection
 
 {{-- メインコンテンツ --}}
-@section('contets')
+@section('contents')
 
         <h1>タスクの登録(未実装)</h1>
 
@@ -64,7 +64,7 @@
         <br>
         <hr>
         <menu label="リンク">
-        <a href="./index.html">ログアウト(未実装)</a><br>
+        <a href="./index.html">ログアウト</a><br>
         </menu>
 
 @endsection

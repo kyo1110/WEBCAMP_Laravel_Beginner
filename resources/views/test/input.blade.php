@@ -2,7 +2,8 @@
 @extends('test.layout')
 
 {{-- メインコンテンツ --}}
-@section('contets')
+@section('contents')
         email：{{ $datum['email'] }}<br>
         パスワード：{{ $datum['password'] }}<br>
 @endsection
+

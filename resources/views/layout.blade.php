@@ -6,6 +6,6 @@
         <title>ログイン機能付きタスク管理サービス @yield('title')</title>
     </head>
     <body>
-        @yield('contets')
+        @yield('contents')
     </body>
 </html>
