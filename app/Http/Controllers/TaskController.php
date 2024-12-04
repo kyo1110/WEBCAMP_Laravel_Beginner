@@ -12,14 +12,24 @@ class TaskController extends Controller
 {
     public function list()
     {
+        // 1Page あたりの表示アイテム数を設定
+        $per_page = 10;
+
         // 一覧の取得
-        $list = TaskModel::where('user_id', Auth::id())->orderBy('priority', 'DESC')->get();
+        $list = TaskModel::where('user_id', Auth::id())
+                        ->orderBy('priority', 'DESC')
+                        ->orderBy('period')
+                        ->orderBy('created_at')
+                        ->paginate($per_page);
+                        // ->get();
+        /*
         $sql = TaskModel::where('user_id', Auth::id())->orderBy('priority', 'DESC')->toSql();
         // echo "<pre>\n"; var_dump($sql, $list); exit;
         //var_dump($sql);
-
+        */
         return view('task.list', ['list' => $list]);
     }
+    
     /**
      * タスクの新規登録
      */
