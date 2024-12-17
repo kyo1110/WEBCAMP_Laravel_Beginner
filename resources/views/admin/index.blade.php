@@ -22,7 +22,7 @@
             @csrf
             ログインID:<input type="text" name="login_id"><br>
             パスワード:<input type="password" name="password"><br>
-            <button>ログインする</button>
+            <button class="btn btn-primary mb-3">ログインする</button>
         </form>
     @endsection
     </body>
