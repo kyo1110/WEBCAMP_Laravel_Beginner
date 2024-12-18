@@ -39,7 +39,8 @@
         </form>
 
         <h1>タスクの一覧</h1>
-        <a href="/task/csv/download">CSVダウンロード</a>
+        <a href="/task/csv/download">CSVダウンロード</a><br>
+        <a href="/completed_tasks/list">完了タスク一覧</a>
         <table border="1">
             <tr>
                 <td>タスク名
