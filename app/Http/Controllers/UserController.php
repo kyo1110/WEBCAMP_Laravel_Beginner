@@ -42,7 +42,7 @@ class UserController extends Controller
         $request->session()->flash('user_register_success', true);
 
         // リダイレクト
-        return redirect('/user/register');
+        return redirect('/');
     }
     
 }
