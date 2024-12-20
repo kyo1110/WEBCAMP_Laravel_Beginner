@@ -25,14 +25,11 @@ class TaskController extends Controller
         
         // 一覧の取得
         $list = $this->getListBuilder()
-                         ->paginate($per_page);
+                     ->paginate($per_page);
                         // ->get();
         /*
-        $sql = TaskModel::where('user_id', Auth::id())
-                        ->orderBy('priority', 'DESC')
-                        ->orderBy('period')
-                        ->orderBy('created_at')
-                        ->toSql();
+        $sql =  $this->getListBuilder()
+            ->toSql();
         //echo "<pre>\n"; var_dump($sql, $list); exit;
         var_dump($sql);
         */
@@ -88,7 +85,7 @@ class TaskController extends Controller
     }
     
     /**
-     * タスクの更新処理
+     * タスクの編集処理
      */
     public function editSave(TaskRegisterPostRequest $request, $task_id)
     {
@@ -120,8 +117,8 @@ class TaskController extends Controller
         // 詳細閲覧画面にリダイレクトする
         return redirect(route('detail', ['task_id' => $task->id]));
     } 
-
-     /**
+    
+    /**
      * 削除処理
      */
     public function delete(Request $request, $task_id)
@@ -138,7 +135,7 @@ class TaskController extends Controller
         // 一覧に遷移する
         return redirect('/task/list');
     }
-
+    
     /**
      * タスクの完了
      */
@@ -156,9 +153,9 @@ class TaskController extends Controller
                 throw new \Exception('');
             }
 
-            //var_dump($task->toArray()); exit;
             // tasks側を削除する
             $task->delete();
+            //var_dump($task->toArray()); exit;
 
             // completed_tasks側にinsertする
             $dask_datum = $task->toArray();
@@ -176,7 +173,7 @@ class TaskController extends Controller
             // 完了メッセージ出力
             $request->session()->flash('front.task_completed_success', true);
         } catch(\Throwable $e) {
-            var_dump($e->getMessage()); exit;
+            // var_dump($e->getMessage()); exit;
             // トランザクション異常終了
             DB::rollBack();
             // 完了失敗メッセージ出力
@@ -186,7 +183,7 @@ class TaskController extends Controller
         // 一覧に遷移する
         return redirect('/task/list');
     }
-
+    
     /**
      * CSV ダウンロード
      */
@@ -202,26 +199,22 @@ class TaskController extends Controller
             'updated_at' => 'タスク修正日',
         ];
 
-        // 「ダウンロードさせたいCSｖ」を作成する
-
-        //データを取得する
+        /* 「ダウンロードさせたいCSV」を作成する */
+        // データを取得する
         $list = $this->getListBuilder()->get();
-        var_dump($list->toArray()); exit;
 
         // バッファリングを開始
         ob_start();
 
-        // 「書き込み先を"出力"にした」ファイルハンドルを作成する
-        $file = new \splFileObject('php://output', 'w'); 
-
+        // 出力用のファイルハンドルを作成する
+        $file = new \SplFileObject('php://output', 'w');
         // ヘッダを書き込む
         $file->fputcsv(array_values($data_list));
-
-        // CSVをファイルに書き込む（出力する）
+        // CSVをファイルに書き込む(出力する)
         foreach($list as $datum) {
-            $awk = []; //作業領域の確保
-            // date_listに書いてある順に、書いてある要素だけを $awkに格納する
-            foreach($date_list as $k => $v) {
+            $awk = []; // 作業領域の確保
+            // $data_listに書いてある順番に、書いてある要素だけを $awkに格納する
+            foreach($data_list as $k => $v) {
                 if ($k === 'priority') {
                     $awk[] = $datum->getPriorityString();
                 } else {
@@ -238,24 +231,12 @@ class TaskController extends Controller
         // 文字コードを変換する
         $csv_string_sjis = mb_convert_encoding($csv_string, 'SJIS', 'UTF-8');
 
-        
         // ダウンロードファイル名の作成
         $download_filename = 'task_list.' . date('Ymd') . '.csv';
         // CSVを出力する
         return response($csv_string_sjis)
                 ->header('Content-Type', 'text/csv')
                 ->header('Content-Disposition', 'attachment; filename="' . $download_filename . '"');
-    }
-
-    /**
-     * 一覧用の Illuminate\Database\Eloquent\Builder インスタンスの取得
-     */
-    protected function getListBuilder()
-    {
-        return TaskModel::where('user_id', Auth::id())
-        ->orderBy('priority', 'DESC')
-        ->orderBy('period')
-        ->orderBy('created_at');
     }
     
     /**
@@ -290,4 +271,15 @@ class TaskController extends Controller
         // テンプレートに「取得したレコード」の情報を渡す
         return view($template_name, ['task' => $task]);
     }
+    
+    /**
+     * 一覧用の Illuminate\Database\Eloquent\Builder インスタンスの取得
+     */
+    protected function getListBuilder()
+    {
+        return TaskModel::where('user_id', Auth::id())
+                     ->orderBy('priority', 'DESC')
+                     ->orderBy('period')
+                     ->orderBy('created_at');
+    }    
 }
