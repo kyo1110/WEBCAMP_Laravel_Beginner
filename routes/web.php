@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/edit/{task_id}', [TaskController::class, 'edit'])->whereNumber('task_id')->name('edit');
   Route::put('/edit/{task_id}', [TaskController::class, 'editSave'])->whereNumber('task_id')->name('edit_save');
   Route::delete('/delete/{task_id}', [TaskController::class,'delete'])->whereNumber('task_id')->name('delete');
-  Route::get('/complete/{task_id}', [TaskController::class, 'complete'])->whereNumber('task_id')->name('complete');
+  Route::post('/complete/{task_id}', [TaskController::class, 'complete'])->whereNumber('task_id')->name('complete');
   Route::get('/csv/download', [TaskController::class, 'csvDownload']);
   });
   Route::get('/completed_tasks/list', [CompletedTaskController::class, 'list']);
