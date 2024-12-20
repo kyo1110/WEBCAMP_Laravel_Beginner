@@ -43,9 +43,9 @@
         <a href="/completed_tasks/list">完了タスク一覧</a>
         <table border="1">
             <tr>
-                <td>タスク名
-                <td>期限
-                <td>重要度
+                <th>タスク名
+                <th>期限
+                <th>重要度
         @foreach ($list as $task)
             <tr>
                 <td>{{ $task->name }}

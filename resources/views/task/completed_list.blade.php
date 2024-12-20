@@ -10,14 +10,16 @@
         <a href="/task/list">タスク一覧に戻る</a>
         <table border="1">
             <tr>
-                <td>タスク名
-                <td>期限
-                <td>重要度
+                <th>タスク名
+                <th>期限
+                <th>重要度
+                <th>タスク終了日
         @foreach ($list as $task)
             <tr>
                 <td>{{ $task->name }}
                 <td>{{ $task->period }}
                 <td>{{ $task->getPriorityString() }}
+                <td>{{ $task->created_at }}
         @endforeach
             
         </table>
@@ -26,7 +28,7 @@
         {{-- {{ $list->links() }} --}}
         現在 {{ $list->currentPage() }} ページ目<br>
         @if ($list->onFirstPage() === false)
-        <a href="task/list">最初のページ</a>
+        <a href="/completed_tasks/list">最初のページ</a>
         @else
             最初のページ
         @endif
