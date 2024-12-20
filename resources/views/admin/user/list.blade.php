@@ -13,9 +13,9 @@
         <h1>ユーザー一覧</h1>
         <table border="1">
             <tr>
-                <td>ユーザーID
-                <td>ユーザー名
-                <td>タスク件数
+                <th>ユーザーID
+                <th>ユーザー名
+                <th>タスク件数
         @foreach ($users as $user)
         <tr>
             <td>{{ $user->id }}

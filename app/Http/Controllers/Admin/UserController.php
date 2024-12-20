@@ -23,9 +23,9 @@ class UserController extends Controller
                             ->groupBy($group_by_column)
                             ->orderBy('users.id')
                             ->get();
-        echo "<pre>\n";
-        var_dump($list->toArray()); exit;
+        //echo "<pre>\n";
+        //var_dump($list->toArray()); exit;
 
-        return view('admin.user.list');
+        return view('admin.user.list', ['users' => $list]);
     }
 }
