@@ -16,7 +16,7 @@
         @endif        
         <form action="register" method="post">
             @csrf
-            氏名：<input type="text" name="name" value="{{ old('name') }}"><br>
+            名前：<input type="text" name="name" value="{{ old('name') }}"><br>
             email：<input type="text" name="email" value="{{ old('email') }}"><br>
             パスワード：<input type="password" name="password"><br>
             <button>登録する</button><br>
